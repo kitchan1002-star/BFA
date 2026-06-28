@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="zh-Hant-HK">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Beyond Fitness Academy Hong Kong 管理</title>
+    <link rel="stylesheet" href="styles.css?v=class-modules-v20">
+  </head>
+  <body>
+    <svg aria-hidden="true" class="icon-defs">
+      <symbol id="icon-dashboard" viewBox="0 0 24 24">
+        <path d="M4 13h7V4H4v9Zm9 7h7v-7h-7v7ZM4 20h7v-5H4v5Zm9-9h7V4h-7v7Z"></path>
+      </symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <path d="M16 11c1.66 0 3-1.57 3-3.5S17.66 4 16 4s-3 1.57-3 3.5S14.34 11 16 11Zm-8 0c1.66 0 3-1.57 3-3.5S9.66 4 8 4 5 5.57 5 7.5 6.34 11 8 11Zm0 2c-2.67 0-6 1.34-6 4v2h12v-2c0-2.66-3.33-4-6-4Zm8 0c-.31 0-.65.02-1 .06 1.18.86 2 2.01 2 3.94v2h5v-2c0-2.66-3.33-4-6-4Z"></path>
+      </symbol>
+      <symbol id="icon-person" viewBox="0 0 24 24">
+        <path d="M12 12c2.49 0 4.5-2.24 4.5-5S14.49 2 12 2 7.5 4.24 7.5 7s2.01 5 4.5 5Zm0 2c-3.86 0-7 2.24-7 5v3h14v-3c0-2.76-3.14-5-7-5Z"></path>
+      </symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24">
+        <path d="M7 2h2v3h6V2h2v3h3v17H4V5h3V2Zm12 9H5v9h14v-9ZM5 9h14V7H5v2Z"></path>
+      </symbol>
+      <symbol id="icon-dollar" viewBox="0 0 24 24">
+        <path d="M11 3h2v2.08c2.28.34 3.82 1.69 4.43 3.53l-2.05.84C14.93 8.06 13.82 7.2 12 7.2c-1.7 0-2.7.7-2.7 1.73 0 1.08 1.07 1.45 3.48 2.02 2.88.68 5.07 1.59 5.07 4.32 0 2.19-1.74 3.81-4.85 4.13V22h-2v-2.62c-2.74-.39-4.52-1.88-5.1-4.11l2.14-.75c.5 1.73 1.86 2.68 4.02 2.68 2.05 0 3.03-.72 3.03-1.84 0-1.18-1.08-1.58-3.63-2.17-2.8-.65-4.9-1.52-4.9-4.12 0-2.08 1.67-3.63 4.44-3.98V3Z"></path>
+      </symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24">
+        <path d="M4 4h16v12H7.8L4 20V4Zm2 2v9.18L6.98 14H18V6H6Zm3 3h6v2H9V9Zm0 3h4v2H9v-2Z"></path>
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6V5Z"></path>
+      </symbol>
+      <symbol id="icon-save" viewBox="0 0 24 24">
+        <path d="M5 3h12l2 2v16H5V3Zm2 2v14h10V6.2L15.8 5H15v5H8V5H7Zm3 0v3h3V5h-3Zm-1 9h6v2H9v-2Z"></path>
+      </symbol>
+      <symbol id="icon-copy" viewBox="0 0 24 24">
+        <path d="M7 7V3h14v14h-4v4H3V7h4Zm2 0h8v8h2V5H9v2Zm-4 2v10h10V9H5Z"></path>
+      </symbol>
+      <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+        <path d="M12.03 3A8.86 8.86 0 0 0 4.4 16.4L3 21l4.73-1.35A8.87 8.87 0 1 0 12.03 3Zm0 2a6.86 6.86 0 0 1 5.87 10.4 6.84 6.84 0 0 1-8.78 2.52l-.36-.18-2.83.8.83-2.7-.23-.4A6.86 6.86 0 0 1 12.03 5Zm-2.2 3.43c-.16 0-.41.06-.62.3-.21.23-.8.78-.8 1.91s.82 2.21.93 2.37c.12.15 1.6 2.55 3.95 3.47 1.95.77 2.35.62 2.77.58.43-.04 1.38-.56 1.57-1.1.2-.54.2-1 .14-1.1-.06-.09-.22-.15-.47-.27-.25-.12-1.46-.72-1.69-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.78.96-.15.17-.29.19-.54.07-.25-.13-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.12-.12.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.49-.56-.5h-.48Z"></path>
+      </symbol>
+      <symbol id="icon-reset" viewBox="0 0 24 24">
+        <path d="M12 5a7 7 0 1 1-6.33 4H3.5A9 9 0 1 0 12 3V1L7.5 4.5 12 8V5Z"></path>
+      </symbol>
+    </svg>
+
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主選單">
+        <div class="brand">
+          <img class="brand-logo" src="assets/beyond-fitness-logo.png" alt="Beyond Fitness Academy Hong Kong">
+          <span class="brand-fallback" hidden>Beyond Fitness Academy Hong Kong</span>
+        </div>
+
+        <nav class="nav-list">
+          <button class="nav-button is-active" data-view-target="attendance">
+            <svg><use href="#icon-calendar"></use></svg>
+            <span>小組班</span>
+          </button>
+          <button class="nav-button" data-view-target="individual">
+            <svg><use href="#icon-person"></use></svg>
+            <span>個人班</span>
+          </button>
+          <button class="nav-button" data-view-target="students">
+            <svg><use href="#icon-users"></use></svg>
+            <span>學員收費</span>
+          </button>
+          <button class="nav-button" data-view-target="renewals">
+            <svg><use href="#icon-message"></use></svg>
+            <span>續費通知</span>
+          </button>
+          <button class="nav-button" data-view-target="dashboard">
+            <svg><use href="#icon-dashboard"></use></svg>
+            <span>今日成效</span>
+          </button>
+          <button class="nav-button" data-view-target="revenue">
+            <svg><use href="#icon-dollar"></use></svg>
+            <span>收入</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p id="storageStatus">本機資料已載入</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="news-strip" aria-hidden="true"></div>
+
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">球會營運台</p>
+            <h2 id="viewTitle">今日成效</h2>
+          </div>
+          <div class="date-pill">
+            <span id="hkDateLabel"></span>
+            <strong id="todayRevenueMini">$0</strong>
+          </div>
+          <div class="auth-status" id="authStatus">
+            <span id="authStatusText">未登入</span>
+            <button class="ghost-button" id="logoutButton" type="button" hidden>登出</button>
+          </div>
+        </header>
+
+        <section class="view auth-view" id="view-auth" aria-labelledby="auth-heading">
+          <form class="panel auth-card" id="loginForm">
+            <div>
+              <p class="eyebrow">Staff Login</p>
+              <h3 id="auth-heading">帳戶登入</h3>
+            </div>
+            <div class="sheet-login-fields">
+              <label>
+                <span>帳戶</span>
+                <input id="sheetLoginAccount" name="account" autocomplete="username" required placeholder="例：founder">
+              </label>
+              <label>
+                <span>密碼</span>
+                <input id="sheetLoginPassword" name="password" type="password" autocomplete="current-password" required>
+              </label>
+              <button class="primary-button" id="sheetLoginButton" type="submit">
+                <svg><use href="#icon-save"></use></svg>
+                <span>登入</span>
+              </button>
+            </div>
+            <p class="auth-error" id="authError" hidden></p>
+            <div class="account-list" id="allowedAccountList" hidden></div>
+            <p class="auth-note" id="cloudStatusText" hidden></p>
+          </form>
+        </section>
+
+        <section class="view is-active" id="view-dashboard" aria-labelledby="dashboard-heading">
+          <div class="dashboard-layout">
+            <div class="court-strip">
+              <img src="assets/badminton-court.png" alt="室內羽毛球場">
+              <div class="court-overlay">
+                <p class="eyebrow">Beyond Fitness HK</p>
+                <h3 id="dashboardSeason">2026 夏季班</h3>
+              </div>
+            </div>
+
+            <div class="metric-grid" id="dashboardMetrics"></div>
+          </div>
+
+          <div class="section-grid two-columns">
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">今日課堂</p>
+                  <h3 id="dashboard-heading">完成狀態</h3>
+                </div>
+                <button class="secondary-button" data-jump-view="attendance">
+                  <svg><use href="#icon-calendar"></use></svg>
+                  <span>前往點名</span>
+                </button>
+              </div>
+              <div id="todaySessionList" class="session-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">快將續費</p>
+                  <h3>剩餘 1 credit</h3>
+                </div>
+                <button class="secondary-button" data-jump-view="renewals">
+                  <svg><use href="#icon-message"></use></svg>
+                  <span>通知</span>
+                </button>
+              </div>
+              <div id="dashboardRenewals" class="compact-list"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-students" aria-labelledby="students-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Package / Credit</p>
+              <h3 id="students-heading">學員收費紀錄</h3>
+            </div>
+            <input type="search" id="studentSearch" class="search-input" placeholder="搜尋學員、電話或小組">
+          </div>
+
+          <div class="section-grid two-columns form-grid">
+            <form class="panel data-form" id="studentForm">
+              <div class="form-title">
+                <svg><use href="#icon-plus"></use></svg>
+                <h4>新增學員</h4>
+              </div>
+              <label>
+                <span>姓名</span>
+                <input name="name" required placeholder="例：陳曉晴">
+              </label>
+              <label>
+                <span>WhatsApp 電話</span>
+                <input name="phone" required placeholder="例：85291234567">
+              </label>
+              <label>
+                <span>小組 / 級別</span>
+                <input name="group" required placeholder="例：U12 小組A">
+              </label>
+              <label>
+                <span>來季建議價錢 HK$</span>
+                <input name="nextSeasonPrice" type="number" min="0" step="10" required value="1680">
+              </label>
+              <label class="full-span">
+                <span>續費優惠</span>
+                <input name="offer" placeholder="例：早鳥優惠減 $100，限本週確認">
+              </label>
+              <button class="primary-button" type="submit">
+                <svg><use href="#icon-save"></use></svg>
+                <span>儲存學員</span>
+              </button>
+            </form>
+
+            <form class="panel data-form" id="paymentForm">
+              <div class="form-title">
+                <svg><use href="#icon-dollar"></use></svg>
+                <h4>新增收費 / Package</h4>
+              </div>
+              <label>
+                <span>學員</span>
+                <select name="studentId" id="paymentStudentSelect" required></select>
+              </label>
+              <label>
+                <span>日期</span>
+                <input name="date" type="date" required>
+              </label>
+              <label>
+                <span>Package 名稱</span>
+                <input name="packageName" required value="小組班 8 堂">
+              </label>
+              <label>
+                <span>Credit 數</span>
+                <input name="credits" type="number" min="1" step="1" required value="8">
+              </label>
+              <label>
+                <span>實收金額 HK$</span>
+                <input name="amount" type="number" min="0" step="10" required value="1600">
+              </label>
+              <label>
+                <span>收款方式</span>
+                <select name="method">
+                  <option>FPS</option>
+                  <option>PayMe</option>
+                  <option>現金</option>
+                  <option>銀行轉帳</option>
+                </select>
+              </label>
+              <label class="full-span">
+                <span>備註</span>
+                <input name="note" placeholder="例：兄妹優惠 / 舊生價">
+              </label>
+              <button class="primary-button" type="submit">
+                <svg><use href="#icon-save"></use></svg>
+                <span>記錄收費</span>
+              </button>
+            </form>
+          </div>
+
+          <section class="panel table-panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>學員</th>
+                    <th>小組</th>
+                    <th>最新 package</th>
+                    <th>已購</th>
+                    <th>已用</th>
+                    <th>剩餘</th>
+                    <th>每堂價值</th>
+                    <th>最近收費</th>
+                  </tr>
+                </thead>
+                <tbody id="studentTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="view-attendance" aria-labelledby="attendance-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Group Class</p>
+              <h3 id="attendance-heading">小組班點名</h3>
+            </div>
+            <div class="inline-actions attendance-toolbar">
+              <input type="date" id="attendanceDate">
+              <button class="secondary-button" data-jump-view="schedule" data-class-type="group">
+                <svg><use href="#icon-plus"></use></svg>
+                <span>新增課堂</span>
+              </button>
+            </div>
+          </div>
+
+          <form class="panel data-form schedule-form" id="sessionForm">
+            <div class="form-title">
+              <svg><use href="#icon-plus"></use></svg>
+              <h4>新增課堂</h4>
+            </div>
+            <label>
+              <span>日期</span>
+              <input name="date" type="date" required>
+            </label>
+            <label>
+              <span>時間</span>
+              <input name="time" type="time" required value="18:00">
+            </label>
+            <label>
+              <span>課堂類別</span>
+              <select name="classType" id="sessionClassType" required>
+                <option value="group">Group Class</option>
+                <option value="individual">Individual Class</option>
+              </select>
+            </label>
+            <label>
+              <span>班名</span>
+              <input name="groupName" id="sessionGroupName" required placeholder="例：U12 小組A">
+            </label>
+            <label>
+              <span>教練</span>
+              <input name="coach" required placeholder="例：Coach 梁">
+            </label>
+            <label class="full-span">
+              <span>學員</span>
+              <select name="studentIds" id="sessionStudentSelect" multiple required></select>
+            </label>
+            <button class="primary-button" type="submit">
+              <svg><use href="#icon-save"></use></svg>
+              <span>建立課堂</span>
+            </button>
+          </form>
+
+          <div id="attendanceSessions" class="attendance-stack"></div>
+        </section>
+
+        <section class="view" id="view-individual" aria-labelledby="individual-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Individual Class</p>
+              <h3 id="individual-heading">個人班點名</h3>
+            </div>
+            <div class="inline-actions attendance-toolbar">
+              <input type="date" id="individualAttendanceDate">
+              <button class="secondary-button" data-jump-view="schedule" data-class-type="individual">
+                <svg><use href="#icon-plus"></use></svg>
+                <span>新增課堂</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="individualSessions" class="attendance-stack individual-attendance-stack"></div>
+        </section>
+
+        <section class="view" id="view-schedule" aria-labelledby="schedule-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Class Setup</p>
+              <h3 id="schedule-heading">新增課堂</h3>
+            </div>
+            <button class="secondary-button" id="scheduleReturnButton" type="button">
+              <svg><use href="#icon-calendar"></use></svg>
+              <span id="scheduleReturnLabel">返回小組班</span>
+            </button>
+          </div>
+          <div id="scheduleFormMount"></div>
+        </section>
+
+        <section class="view" id="view-revenue" aria-labelledby="revenue-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Revenue</p>
+              <h3 id="revenue-heading">收入</h3>
+            </div>
+          </div>
+
+          <div class="revenue-modules">
+            <section class="panel revenue-module">
+              <div class="section-heading revenue-module-heading">
+                <div>
+                  <p class="eyebrow">Daily Closing</p>
+                  <h3>每日收入</h3>
+                </div>
+                <div class="inline-actions">
+                  <input type="date" id="revenueDate">
+                  <button class="secondary-button" id="exportRevenueButton">
+                    <svg><use href="#icon-copy"></use></svg>
+                    <span>匯出 CSV</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="metric-grid" id="revenueMetrics"></div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>課堂</th>
+                      <th>學員</th>
+                      <th>狀態</th>
+                      <th>Credit 處理</th>
+                      <th>Credit</th>
+                      <th>收入</th>
+                    </tr>
+                  </thead>
+                  <tbody id="revenueTableBody"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="panel revenue-module">
+              <div class="section-heading revenue-module-heading">
+                <div>
+                  <p class="eyebrow">Monthly Revenue</p>
+                  <h3>每月收入</h3>
+                </div>
+                <input type="month" id="revenueMonth">
+              </div>
+
+              <div class="metric-grid" id="monthlyRevenueMetrics"></div>
+              <div class="monthly-breakdown" id="monthlyRevenueBreakdown"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-renewals" aria-labelledby="renewals-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">WhatsApp Business</p>
+              <h3 id="renewals-heading">剩餘 1 credit 學員</h3>
+            </div>
+            <label class="toggle-line">
+              <input type="checkbox" id="includeZeroCredits">
+              <span>包括 0 credit</span>
+            </label>
+          </div>
+
+          <div id="renewalList" class="renewal-grid"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="messageModal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="messageModalTitle">
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">續費文案</p>
+            <h3 id="messageModalTitle">WhatsApp 訊息</h3>
+          </div>
+          <button class="icon-button" id="closeModalButton" title="關閉">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <label class="message-editor">
+          <span>訊息內容</span>
+          <textarea id="messageText" rows="10"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button class="secondary-button" id="copyMessageButton">
+            <svg><use href="#icon-copy"></use></svg>
+            <span>複製文案</span>
+          </button>
+          <button class="primary-button" id="openWhatsappButton">
+            <svg><use href="#icon-whatsapp"></use></svg>
+            <span>開啟 WhatsApp Business</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      window.BFAHK_CONFIG = {
+        cloudWebAppUrl: "https://script.google.com/macros/s/AKfycbyUn_A9OvSGxld8eyFKKfRwLOF39HPGnhJ_e3csQ4LTK0asJNO2UwTd-5-a41KyY40w/exec",
+        googleClientId: "327236900277-9upa0dgm138r6oggbfltvdmebd81a9ui.apps.googleusercontent.com"
+      };
+    </script>
+    <script src="app.js?v=class-modules-v20"></script>
+  </body>
+</html>

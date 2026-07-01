@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Beyond Fitness Academy Hong Kong 管理</title>
-    <link rel="stylesheet" href="styles.css?v=multi-date-compact-v32">
+    <link rel="stylesheet" href="styles.css?v=weekly-levels-v33">
   </head>
   <body>
     <svg aria-hidden="true" class="icon-defs">
@@ -175,7 +175,7 @@
                 <h3>未來 7 日</h3>
               </div>
             </div>
-            <div id="upcomingSessionList" class="session-list timetable-list"></div>
+            <div id="upcomingSessionList" class="weekly-schedule-scroll"></div>
           </section>
 
         </section>
@@ -186,7 +186,7 @@
               <p class="eyebrow">Package / Credit</p>
               <h3 id="students-heading">學員收費紀錄</h3>
             </div>
-            <input type="search" id="studentSearch" class="search-input" placeholder="搜尋學員、電話或小組">
+            <input type="search" id="studentSearch" class="search-input" placeholder="搜尋學員、電話或級別">
           </div>
 
           <div class="section-grid two-columns form-grid">
@@ -204,16 +204,12 @@
                 <input name="phone" required placeholder="例：85291234567">
               </label>
               <label>
-                <span>小組 / 級別</span>
-                <input name="group" required placeholder="例：U12 小組A">
-              </label>
-              <label>
-                <span>來季建議價錢 HK$</span>
-                <input name="nextSeasonPrice" type="number" min="0" step="10" required value="1680">
+                <span>級別</span>
+                <select name="group" id="studentLevelSelect" required></select>
               </label>
               <label class="full-span">
-                <span>續費優惠</span>
-                <input name="offer" placeholder="例：早鳥優惠減 $100，限本週確認">
+                <span>備註</span>
+                <input name="note" placeholder="例：家長聯絡偏好、訓練注意事項">
               </label>
               <button class="primary-button" type="submit">
                 <svg><use href="#icon-save"></use></svg>
@@ -272,7 +268,7 @@
                 <thead>
                   <tr>
                     <th>學員</th>
-                    <th>小組</th>
+                    <th>級別</th>
                     <th>最新 package</th>
                     <th>已購</th>
                     <th>已用</th>
@@ -508,6 +504,6 @@
         googleClientId: "327236900277-9upa0dgm138r6oggbfltvdmebd81a9ui.apps.googleusercontent.com"
       };
     </script>
-    <script src="app.js?v=multi-date-compact-v32"></script>
+    <script src="app.js?v=weekly-levels-v33"></script>
   </body>
 </html>

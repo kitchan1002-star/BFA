@@ -664,8 +664,77 @@ svg {
     #e6edf1 0,
     #e6edf1 1px,
     transparent 1px,
-    transparent 54px
+    transparent var(--timeline-hour-height, 54px)
   );
+}
+
+.weekly-schedule-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-gutter: stable;
+  padding: 0 12px 14px;
+}
+
+.weekly-schedule-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(230px, 280px);
+  align-items: start;
+  gap: 10px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.weekly-day-column {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.weekly-day-column > header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--blue-dark);
+  color: #fff;
+}
+
+.weekly-day-column > header strong {
+  font-size: 12px;
+}
+
+.weekly-day-column > header span {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+}
+
+.day-timeline.is-compact {
+  grid-template-columns: 45px minmax(0, 1fr);
+}
+
+.day-timeline.is-compact .timeline-hour-label {
+  right: 5px;
+  font-size: 8px;
+}
+
+.day-timeline.is-compact .timeline-event {
+  padding: 4px 5px;
+}
+
+.day-timeline.is-compact .timeline-event strong {
+  font-size: 9px;
+}
+
+.day-timeline.is-compact .timeline-event span {
+  font-size: 7px;
 }
 
 .timeline-event {
@@ -2214,6 +2283,15 @@ td {
     padding: 0 10px 10px;
   }
 
+  .weekly-schedule-scroll {
+    padding: 0 8px 10px;
+  }
+
+  .weekly-schedule-track {
+    grid-auto-columns: min(72vw, 260px);
+    gap: 8px;
+  }
+
   .daily-schedule-panel .section-heading {
     gap: 8px;
   }
@@ -2395,7 +2473,7 @@ td {
   }
 
   #studentTableBody td:nth-child(1)::before { content: "學員"; }
-  #studentTableBody td:nth-child(2)::before { content: "小組"; }
+  #studentTableBody td:nth-child(2)::before { content: "級別"; }
   #studentTableBody td:nth-child(3)::before { content: "Package"; }
   #studentTableBody td:nth-child(4)::before { content: "已購"; }
   #studentTableBody td:nth-child(5)::before { content: "已用"; }

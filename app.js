@@ -3,7 +3,7 @@ const AUTH_STORAGE_KEY = "badminton-credit-manager.auth.v1";
 const CLOUD_CONFIG_KEY = "badminton-credit-manager.cloud.v1";
 const HK_TIMEZONE = "Asia/Hong_Kong";
 const HTML_APP_CONFIG = typeof window !== "undefined" ? (window.BFAHK_CONFIG || {}) : {};
-const APP_VERSION = "BFAHK-20260701-multi-date-compact-v32";
+const APP_VERSION = "BFAHK-20260701-weekly-levels-v33";
 const DEFAULT_CLOUD_WEB_APP_URL = String(HTML_APP_CONFIG.cloudWebAppUrl || "https://script.google.com/macros/s/AKfycbzwzkAMbktQ_RAfEn9Gx250eXVzIvK8Y6SGY169WuZr2dD29ks1kviz-X0qcdhPg_BtIg/exec").trim();
 console.log(`BFAHK app loaded: ${APP_VERSION}`);
 console.log(`BFAHK backend URL: ${DEFAULT_CLOUD_WEB_APP_URL}`);
@@ -109,6 +109,7 @@ function defaultState() {
     },
     users: [],
     locations: ["場地待定"],
+    levels: ["U8", "U10", "U12", "U14", "U16", "成人"],
     students: [
       {
         id: "s1",
@@ -329,6 +330,9 @@ function normalizeState(parsed = {}) {
     locations: Array.isArray(parsed.locations) && parsed.locations.length
       ? parsed.locations.map((location) => String(location || "").trim()).filter(Boolean)
       : base.locations,
+    levels: Array.isArray(parsed.levels) && parsed.levels.length
+      ? parsed.levels.map((level) => String(level || "").trim()).filter(Boolean)
+      : base.levels,
   };
 
   // Google Sheet / Apps Script 可能會把日期回傳成 Date 字串、ISO 字串、
@@ -1184,15 +1188,15 @@ function wireForms() {
       name: clean(data.get("name")),
       phone: normalizePhone(data.get("phone")),
       group: clean(data.get("group")),
-      nextSeasonPrice: Number(data.get("nextSeasonPrice")) || 0,
-      offer: clean(data.get("offer")) || state.club.defaultOffer,
+      nextSeasonPrice: 0,
+      offer: "",
+      note: clean(data.get("note")),
       openingUsedCredits: 0,
     };
 
     state.students.push(student);
     saveState();
     form.reset();
-    form.elements.nextSeasonPrice.value = "1680";
     renderAll();
     showToast(`已新增 ${student.name}`);
   });
@@ -1520,6 +1524,13 @@ function renderDateLabels() {
 }
 
 function renderSelects() {
+  const levelSelect = document.getElementById("studentLevelSelect");
+  const selectedLevel = levelSelect.value;
+  levelSelect.innerHTML = (state.levels || [])
+    .map((level) => `<option value="${escapeHtml(level)}">${escapeHtml(level)}</option>`)
+    .join("");
+  if ((state.levels || []).includes(selectedLevel)) levelSelect.value = selectedLevel;
+
   const paymentSelect = document.getElementById("paymentStudentSelect");
   const selectedPaymentStudent = paymentSelect.value;
   paymentSelect.innerHTML = state.students
@@ -1568,6 +1579,7 @@ function renderSelects() {
 
 function renderDashboard() {
   const today = hkTodayISO();
+  const tomorrow = addDaysISO(today, 1);
   const nextWeek = addDaysISO(today, 7);
   const selectedDate = document.getElementById("timetableDate").value || today;
   const visibleSessions = scheduleSessionsForCurrentView();
@@ -1580,14 +1592,12 @@ function renderDashboard() {
   const upcomingSessions = visibleSessions
     .filter((session) => session.date > today && session.date <= nextWeek)
     .sort(compareSessionsAscending);
-  const upcomingIndividualCount = [...sessionsToday, ...upcomingSessions]
-    .filter((session) => getSessionClassType(session) === "individual")
-    .length;
+  const sessionsTomorrow = visibleSessions.filter((session) => session.date === tomorrow);
 
   document.getElementById("scheduleOverview").innerHTML = [
     ["今日", `${sessionsToday.length} 堂`],
+    ["明日", `${sessionsTomorrow.length} 堂`],
     ["未來 7 日", `${upcomingSessions.length} 堂`],
-    ["個人班安排", `${upcomingIndividualCount} 堂`],
   ].map(([label, value]) => `
     <div class="timetable-overview-item">
       <span>${escapeHtml(label)}</span>
@@ -1597,9 +1607,7 @@ function renderDashboard() {
 
   document.getElementById("dailyScheduleHeading").textContent = `${formatDisplayDate(selectedDate)}時間表`;
   document.getElementById("dailyScheduleList").innerHTML = renderDailySchedule(selectedSessions);
-  document.getElementById("upcomingSessionList").innerHTML = upcomingSessions.length
-    ? upcomingSessions.map((session) => timetableSessionRow(session, true)).join("")
-    : `<div class="empty-state">未來 7 日未有課堂</div>`;
+  document.getElementById("upcomingSessionList").innerHTML = renderWeeklySchedule(visibleSessions, today);
 
   document.querySelectorAll("[data-session-jump]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1633,7 +1641,7 @@ function renderStudents() {
         <tr>
           <td>
             <strong>${escapeHtml(student.name)}</strong>
-            <div class="meta-line">${escapeHtml(student.phone)}</div>
+            <div class="meta-line">${escapeHtml(student.phone)}${student.note ? ` · ${escapeHtml(student.note)}` : ""}</div>
           </td>
           <td>${escapeHtml(student.group)}</td>
           <td>${latest ? escapeHtml(latest.packageName) : "未有"}</td>
@@ -1760,23 +1768,24 @@ function metricCard(metric, style) {
   `;
 }
 
-function renderDailySchedule(sessions) {
+function renderDailySchedule(sessions, options = {}) {
   const earliestStart = sessions.length ? Math.min(...sessions.map(sessionStartMinutes)) : 8 * 60;
   const latestEnd = sessions.length ? Math.max(...sessions.map(sessionEndMinutes)) : 21 * 60;
-  const startHour = Math.min(8, Math.floor(earliestStart / 60));
-  const endHour = Math.max(22, Math.ceil(latestEnd / 60));
+  const startHour = Number.isFinite(options.startHour) ? options.startHour : Math.min(8, Math.floor(earliestStart / 60));
+  const endHour = Number.isFinite(options.endHour) ? options.endHour : Math.max(22, Math.ceil(latestEnd / 60));
   const dayStart = startHour * 60;
   const totalMinutes = (endHour - startHour) * 60;
-  const pixelsPerMinute = 0.9;
+  const pixelsPerMinute = options.compact ? 0.62 : 0.9;
+  const hourHeight = 60 * pixelsPerMinute;
   const timelineHeight = totalMinutes * pixelsPerMinute;
   const hourLabels = Array.from({ length: endHour - startHour + 1 }, (_, index) => {
     const hour = startHour + index;
-    const labelTop = Math.min(Math.max(index * 54, 7), timelineHeight - 7);
+    const labelTop = Math.min(Math.max(index * hourHeight, 7), timelineHeight - 7);
     return `<span class="timeline-hour-label" style="top:${labelTop}px">${String(hour).padStart(2, "0")}:00</span>`;
   }).join("");
   const events = layoutTimelineSessions(sessions).map(({ session, column, columns }) => {
     const top = (sessionStartMinutes(session) - dayStart) * pixelsPerMinute;
-    const height = Math.max(normalizeDurationMinutes(session.durationMinutes) * pixelsPerMinute, 42);
+    const height = Math.max(normalizeDurationMinutes(session.durationMinutes) * pixelsPerMinute, options.compact ? 28 : 42);
     const left = (column / columns) * 100;
     const width = 100 / columns;
     const classType = getSessionClassType(session);
@@ -1792,11 +1801,39 @@ function renderDailySchedule(sessions) {
   }).join("");
 
   return `
-    <div class="day-timeline" style="--timeline-height:${timelineHeight}px">
+    <div class="day-timeline${options.compact ? " is-compact" : ""}" style="--timeline-height:${timelineHeight}px;--timeline-hour-height:${hourHeight}px">
       <div class="timeline-hours">${hourLabels}</div>
       <div class="timeline-grid" aria-label="當日課堂時間軸">
         ${events || `<div class="timeline-empty">此日期未有課堂</div>`}
       </div>
+    </div>
+  `;
+}
+
+function renderWeeklySchedule(sessions, today) {
+  const dates = Array.from({ length: 7 }, (_, index) => addDaysISO(today, index + 1));
+  const weekSessions = sessions.filter((session) => dates.includes(session.date));
+  const earliestStart = weekSessions.length ? Math.min(...weekSessions.map(sessionStartMinutes)) : 8 * 60;
+  const latestEnd = weekSessions.length ? Math.max(...weekSessions.map(sessionEndMinutes)) : 21 * 60;
+  const startHour = Math.min(8, Math.floor(earliestStart / 60));
+  const endHour = Math.max(22, Math.ceil(latestEnd / 60));
+
+  return `
+    <div class="weekly-schedule-track">
+      ${dates.map((date) => {
+        const daySessions = sessions
+          .filter((session) => session.date === date)
+          .sort((a, b) => a.time.localeCompare(b.time));
+        return `
+          <section class="weekly-day-column">
+            <header>
+              <strong>${escapeHtml(formatDisplayDate(date))}</strong>
+              <span>${daySessions.length} 堂</span>
+            </header>
+            ${renderDailySchedule(daySessions, { startHour, endHour, compact: true })}
+          </section>
+        `;
+      }).join("")}
     </div>
   `;
 }

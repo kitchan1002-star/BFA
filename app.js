@@ -3,7 +3,7 @@ const AUTH_STORAGE_KEY = "badminton-credit-manager.auth.v1";
 const CLOUD_CONFIG_KEY = "badminton-credit-manager.cloud.v1";
 const HK_TIMEZONE = "Asia/Hong_Kong";
 const HTML_APP_CONFIG = typeof window !== "undefined" ? (window.BFAHK_CONFIG || {}) : {};
-const APP_VERSION = "BFAHK-20260701-weekly-levels-v33";
+const APP_VERSION = "BFAHK-20260701-fast-login-v34";
 const DEFAULT_CLOUD_WEB_APP_URL = String(HTML_APP_CONFIG.cloudWebAppUrl || "https://script.google.com/macros/s/AKfycbzwzkAMbktQ_RAfEn9Gx250eXVzIvK8Y6SGY169WuZr2dD29ks1kviz-X0qcdhPg_BtIg/exec").trim();
 console.log(`BFAHK app loaded: ${APP_VERSION}`);
 console.log(`BFAHK backend URL: ${DEFAULT_CLOUD_WEB_APP_URL}`);
@@ -464,7 +464,7 @@ async function cloudRequest(action, payload = {}, authOverride = null) {
   }
 
   try {
-    return await cloudFormPostRequest(action, payload, authOverride, { timeoutMs: 6500 });
+    return await cloudFormPostRequest(action, payload, authOverride, { timeoutMs: 12000 });
   } catch (error) {
     return cloudJsonpRequest(action, payload, authOverride);
   }
@@ -1002,6 +1002,7 @@ async function handleSheetLogin() {
     renderAll();
     setView(defaultViewForCurrentUser());
     showToast(`已登入：${authState.role}`);
+    window.setTimeout(() => syncFromCloud({ silent: true }), 0);
   } catch (loginError) {
     saveAuthState(null);
     updateAuthUI();

@@ -3,7 +3,7 @@ const AUTH_STORAGE_KEY = "badminton-credit-manager.auth.v1";
 const CLOUD_CONFIG_KEY = "badminton-credit-manager.cloud.v1";
 const HK_TIMEZONE = "Asia/Hong_Kong";
 const HTML_APP_CONFIG = typeof window !== "undefined" ? (window.BFAHK_CONFIG || {}) : {};
-const APP_VERSION = "BFAHK-20260701-readable-week-v35";
+const APP_VERSION = "BFAHK-20260701-line-height-only-v37";
 const DEFAULT_CLOUD_WEB_APP_URL = String(HTML_APP_CONFIG.cloudWebAppUrl || "https://script.google.com/macros/s/AKfycbzwzkAMbktQ_RAfEn9Gx250eXVzIvK8Y6SGY169WuZr2dD29ks1kviz-X0qcdhPg_BtIg/exec").trim();
 console.log(`BFAHK app loaded: ${APP_VERSION}`);
 console.log(`BFAHK backend URL: ${DEFAULT_CLOUD_WEB_APP_URL}`);
@@ -1825,13 +1825,8 @@ function renderWeeklySchedule(sessions, today) {
         const daySessions = sessions
           .filter((session) => session.date === date)
           .sort((a, b) => a.time.localeCompare(b.time));
-        const maxConcurrentSessions = Math.max(
-          1,
-          ...layoutTimelineSessions(daySessions).map((item) => item.columns || 1),
-        );
-        const dayWidth = Math.max(260, 48 + maxConcurrentSessions * 220);
         return `
-          <section class="weekly-day-column" style="--weekly-day-width:${dayWidth}px">
+          <section class="weekly-day-column">
             <header>
               <strong>${escapeHtml(formatDisplayDate(date))}</strong>
               <span>${daySessions.length} 堂</span>

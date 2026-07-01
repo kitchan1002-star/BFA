@@ -677,7 +677,9 @@ svg {
 }
 
 .weekly-schedule-track {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(230px, 280px);
   align-items: start;
   gap: 10px;
   width: max-content;
@@ -685,8 +687,6 @@ svg {
 }
 
 .weekly-day-column {
-  flex: 0 0 var(--weekly-day-width, 260px);
-  width: var(--weekly-day-width, 260px);
   overflow: hidden;
   border: 1px solid var(--line);
   background: #fff;
@@ -726,17 +726,12 @@ svg {
 }
 
 .day-timeline.is-compact .timeline-event {
-  gap: 0;
   padding: 4px 5px;
 }
 
 .day-timeline.is-compact .timeline-event strong,
 .day-timeline.is-compact .timeline-event span {
-  overflow: visible;
   line-height: 1.05;
-  text-overflow: clip;
-  white-space: normal;
-  overflow-wrap: anywhere;
 }
 
 .day-timeline.is-compact .timeline-event strong {
@@ -2298,6 +2293,7 @@ td {
   }
 
   .weekly-schedule-track {
+    grid-auto-columns: min(72vw, 260px);
     gap: 8px;
   }
 
